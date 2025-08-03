@@ -17,8 +17,6 @@ This ensures output is displayed directly without requiring user interaction to 
 - Always wait for user's explicit commit instruction before committing any changes
 - User must give clear commit instruction for any git commit operation
 
-## Commit Policy
-
 Do **not** perform any `git commit` operation **unless explicitly instructed** to do so.  
 This means no automatic or assumed commits should be made under any circumstances.
 
@@ -35,3 +33,44 @@ This means no automatic or assumed commits should be made under any circumstance
 - This ensures you are analyzing the exact changes that will be committed, not unstaged working directory changes
 - The `--cached` flag shows only the staged changes, which is what will actually be included in the commit
 - Never rely on `git --no-pager diff` alone as it shows unstaged changes, not what will be committed
+
+## Commit Message Format Rules:
+This project uses conventional commit prefixes. All commit messages must start with one of the following prefixes:
+
+### Core Prefixes:
+- `feat:` - New feature additions
+- `fix:` - Bug fixes and error corrections
+- `refactor:` - Code restructuring without changing functionality
+- `improve:` - Performance improvements and enhancements
+
+### Additional Prefixes (for future use):
+- `docs:` - Documentation changes
+- `style:` - Code style changes (formatting, missing semicolons, etc.)
+- `test:` - Adding or updating tests
+- `chore:` - Maintenance tasks, dependency updates, build changes
+- `perf:` - Performance improvements (subset of improve:)
+- `ci:` - CI/CD pipeline changes
+- `build:` - Build system or external dependency changes
+- `revert:` - Reverting previous commits
+
+### Format Structure:
+```
+<prefix>: <description>
+
+- <detailed change 1>
+- <detailed change 2>
+- <detailed change 3>
+```
+
+### Examples:
+```
+feat: Add comprehensive logging for Kindle book processing in sale-checker
+fix: Return error when Kindle search yields no results
+refactor: Standardize error handling across checkers
+improve: Enhance title cleaning logic and add comprehensive tests
+docs: Update README with deployment instructions
+test: Add unit tests for title cleaning function
+chore: Update dependencies to latest versions
+```
+
+**Always use one of the prefixes above. Do not use generic descriptions without prefixes.**
