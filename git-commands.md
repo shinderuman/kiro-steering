@@ -74,3 +74,17 @@ chore: Update dependencies to latest versions
 ```
 
 **Always use one of the prefixes above. Do not use generic descriptions without prefixes.**
+## Git Output Display Rules
+- **NEVER pipe git commands to head, tail, or other output limiters**
+- Always show full output for git diff, git show, git log commands
+- This ensures complete visibility of changes and commit information
+- Examples of what NOT to do:
+  - ❌ `git --no-pager diff | head -20`
+  - ❌ `git --no-pager show | tail -10`
+  - ❌ `git --no-pager log | head -5`
+- Correct usage:
+  - ✅ `git --no-pager diff`
+  - ✅ `git --no-pager show`
+  - ✅ `git --no-pager log`
+
+Full output visibility is essential for proper code review and change verification.
