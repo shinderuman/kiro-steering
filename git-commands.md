@@ -88,3 +88,32 @@ chore: Update dependencies to latest versions
   - ✅ `git --no-pager log`
 
 Full output visibility is essential for proper code review and change verification.
+
+## New Session Commit Message Guidelines
+When starting a new Kiro session and making the first commit:
+
+### Historical Context Review Process:
+- **ALWAYS review recent commit history using `git --no-pager log -5` (NOT --oneline)**
+- **Study the full commit message format and style used in the project**
+- **Analyze the level of detail and structure in previous commit messages**
+- **Match the established patterns for:**
+  - Message length and detail level
+  - Bullet point structure and formatting
+  - Technical terminology and language style
+  - Explanation depth for changes and reasoning
+
+### Commit Message Consistency Rules:
+- **NEVER use abbreviated git log formats (--oneline, --pretty=oneline) for reference**
+- **Always examine complete commit messages to understand project standards**
+- **Maintain consistency with existing commit message style and detail level**
+- **Include similar level of technical detail as found in project history**
+- **Follow the same bullet point structure and formatting conventions**
+
+### Quality Standards:
+- Match the verbosity and explanation style of recent commits
+- Include technical details at the same depth as historical messages
+- Explain not just what changed, but why and how it impacts the codebase
+- Use consistent terminology and phrasing patterns from project history
+
+This ensures all commit messages maintain consistent quality and style standards
+throughout the project lifecycle, regardless of when they are created.
