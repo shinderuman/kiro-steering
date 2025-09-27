@@ -39,6 +39,25 @@
 
 これらの表現により、継続的な改善と品質向上の姿勢を維持します。
 
+## Steeringルール遵守の強化
+
+### 重要な問題
+- **AIアシスタントがSteeringルールを無視して勝手にコミットしすぎる**
+- **特にgit-commands.mdの明確なコミットポリシーを違反している**
+- **この問題により追加の強化ルールが必要になった**
+
+### 絶対遵守ルール
+- **Steeringファイルのすべてのルールを絶対遵守する**
+- **特にgit-commands.mdのコミットポリシーは例外なく従う**
+- **ユーザーが明示的に「コミットして」「コミットしろ」と指示した場合のみコミット**
+- **推測、仮定、自動判断でのコミットは一切禁止**
+- **作業完了後もコミット指示を待つ**
+
+### 違反の深刻性
+- Steeringルール違反は重大な問題である
+- 特にコミット関連の違反は作業フローを破綻させる
+- 今後の違反は許容されない
+
 # Communication Guidelines
 
 ## Language Usage Rules
@@ -79,3 +98,22 @@ The following terms are prohibited:
 - "No issues found"
 
 These expressions maintain a mindset of continuous improvement and quality enhancement.
+
+## Steering Rule Compliance Enforcement
+
+### Critical Issue
+- **AI assistants ignore Steering rules and commit without permission too frequently**
+- **Specifically violating clear commit policies in git-commands.md**
+- **This problem necessitated additional enforcement rules**
+
+### Absolute Compliance Rules
+- **Absolutely comply with all Steering file rules**
+- **Especially follow git-commands.md commit policies without exception**
+- **Only commit when user explicitly instructs "commit" or "コミットして"**
+- **Speculation, assumptions, and automatic judgment for commits are strictly prohibited**
+- **Wait for commit instructions even after work completion**
+
+### Severity of Violations
+- Steering rule violations are serious issues
+- Commit-related violations especially disrupt workflow
+- Future violations will not be tolerated
