@@ -71,6 +71,29 @@ func formatOutput() { ... }   // processDataから呼び出される
 - 正しい位置は常に呼び出し元関数の直後で、自然な実行フローに従う
 - これはコードの可読性と保守性のために必須である
 
+### 呼び出し順序の正確な理解
+**重要：関数の配置は呼び出し元関数内での呼び出し順序に厳密に従う必要がある**
+
+#### 正しい配置例
+```go
+func main() {
+    a := getA()     // 1番目の呼び出し
+    b := processB() // 2番目の呼び出し  
+    outputC(b)      // 3番目の呼び出し
+}
+
+// 正しい関数配置順序
+func main() { ... }
+func getA() { ... }     // ✅ 1番目の呼び出し順
+func processB() { ... } // ✅ 2番目の呼び出し順
+func outputC() { ... }  // ✅ 3番目の呼び出し順
+```
+
+#### よくある間違い
+- 推測による配置：呼び出し順序を確認せずに配置する
+- 機能的重要度による配置：重要度で順序を決める
+- 修正時の注意不足：関数移動時に呼び出し順序を再確認しない
+
 ## コードレビュー基準
 - すべての関数が明確で説明的な名前を持つことを確認する
 - エラーハンドリングが包括的で情報提供的であることを確認する
@@ -150,6 +173,29 @@ func formatOutput() { ... }   // Called by processData
 - If you place a function in the wrong location, it MUST be moved to the correct position
 - The correct position is always immediately after the calling function, following the natural execution flow
 - This is MANDATORY for code readability and maintainability
+
+### Understanding Call Order Precisely
+**Critical: Function placement must strictly follow the call order within the calling function**
+
+#### Correct Placement Example
+```go
+func main() {
+    a := getA()     // 1st call
+    b := processB() // 2nd call  
+    outputC(b)      // 3rd call
+}
+
+// Correct function placement order
+func main() { ... }
+func getA() { ... }     // ✅ 1st call order
+func processB() { ... } // ✅ 2nd call order
+func outputC() { ... }  // ✅ 3rd call order
+```
+
+#### Common Mistakes
+- Placement by assumption: Placing without verifying call order
+- Placement by functional importance: Ordering by importance rather than call sequence
+- Insufficient attention during modifications: Not re-verifying call order when moving functions
 
 ## Code Review Standards
 - Ensure all functions have clear, descriptive names
