@@ -94,6 +94,98 @@ func outputC() { ... }  // ✅ 3番目の呼び出し順
 - 機能的重要度による配置：重要度で順序を決める
 - 修正時の注意不足：関数移動時に呼び出し順序を再確認しない
 
+## 変数使用ガイドライン
+
+### 再利用しない変数の回避
+**RULE: 一度しか使用されない変数は一行がよっぽど長くならない限り使用しない**
+
+#### 再利用の定義
+変数が**2回以上使用される**場合は再利用とみなす：
+- 代入時（1回目）
+- 参照時（2回目以降）
+
+#### 悪い例（一度しか使用されない）
+```go
+// ❌ 悪い：一度しか使用されない変数
+func generateURL(name string) string {
+    encodedName := url.QueryEscape(name)  // 1回目：代入
+    return config.BaseURL + encodedName   // 2回目：使用（これは再利用ではない）
+}
+
+func isError(err error) bool {
+    errMsg := err.Error()                 // 1回目：代入
+    return strings.Contains(errMsg, "error") // 2回目：使用（これは再利用ではない）
+}
+```
+
+#### 良い例（直接使用）
+```go
+// ✅ 良い：直接使用
+func generateURL(name string) string {
+    return config.BaseURL + url.QueryEscape(name)
+}
+
+func isError(err error) bool {
+    return strings.Contains(err.Error(), "error")
+}
+```
+
+#### 良い例（再利用している）
+```go
+// ✅ 良い：変数が複数回使用される
+func main() {
+    characters := processCategory(category, jsonFile)  // 1回目：代入
+    outputJSON(characters)                             // 2回目：使用（再利用）
+}
+
+func processData(input string) error {
+    result := complexProcessing(input)    // 1回目：代入
+    if result == nil {                    // 2回目：使用
+        return errors.New("failed")
+    }
+    return saveResult(result)             // 3回目：使用（明確な再利用）
+}
+```
+
+#### 例外：行が長すぎる場合
+```go
+// ✅ 許可：行が長すぎる場合は変数を使用
+func processComplexData(data *ComplexStruct) error {
+    processedResult := data.ProcessWithMultipleParameters(param1, param2, param3, param4, param5)
+    return validateAndStoreResult(processedResult, additionalParam1, additionalParam2)
+}
+```
+
+#### 例外：複数の戻り値がある場合
+```go
+// ✅ 許可：複数の戻り値を受け取る場合
+func cleanText(text string) string {
+    before, _, _ := strings.Cut(text, "(")
+    return strings.TrimSpace(before)
+}
+```
+
+### 判定基準
+1. **使用回数を数える**: 代入 + 参照の合計回数
+2. **2回以上なら変数使用**: 再利用とみなす
+3. **1回のみなら直接使用**: 変数を避ける
+4. **行の長さ**: 80-100文字を超える場合は例外
+5. **複数戻り値**: 必要な値のみ変数に格納
+
+### 間違いやすいパターン
+```go
+// ❌ これは再利用ではない（1回の代入 + 1回の使用 = 計2回だが実質1回の処理）
+result := function()
+return result
+
+// ✅ これは再利用（1回の代入 + 2回の使用 = 計3回）
+result := function()
+if result != nil {
+    return process(result)
+}
+```
+
+この規則により、真に再利用される変数のみを使用し、不要な複雑さを排除する。
 ## コードレビュー基準
 - すべての関数が明確で説明的な名前を持つことを確認する
 - エラーハンドリングが包括的で情報提供的であることを確認する
@@ -196,6 +288,99 @@ func outputC() { ... }  // ✅ 3rd call order
 - Placement by assumption: Placing without verifying call order
 - Placement by functional importance: Ordering by importance rather than call sequence
 - Insufficient attention during modifications: Not re-verifying call order when moving functions
+
+## Variable Usage Guidelines
+
+### Avoiding Non-Reused Variables
+**RULE: Do not use variables that are only used once unless the line would become excessively long**
+
+#### Definition of Reuse
+A variable is considered reused when it is **used 2 or more times**:
+- Assignment (1st time)
+- Reference (2nd time and beyond)
+
+#### Bad Examples (Used Only Once)
+```go
+// ❌ Bad: Variable used only once
+func generateURL(name string) string {
+    encodedName := url.QueryEscape(name)  // 1st: assignment
+    return config.BaseURL + encodedName   // 2nd: use (this is not reuse)
+}
+
+func isError(err error) bool {
+    errMsg := err.Error()                 // 1st: assignment
+    return strings.Contains(errMsg, "error") // 2nd: use (this is not reuse)
+}
+```
+
+#### Good Examples (Direct Use)
+```go
+// ✅ Good: Direct use
+func generateURL(name string) string {
+    return config.BaseURL + url.QueryEscape(name)
+}
+
+func isError(err error) bool {
+    return strings.Contains(err.Error(), "error")
+}
+```
+
+#### Good Examples (Actually Reused)
+```go
+// ✅ Good: Variable used multiple times
+func main() {
+    characters := processCategory(category, jsonFile)  // 1st: assignment
+    outputJSON(characters)                             // 2nd: use (reuse)
+}
+
+func processData(input string) error {
+    result := complexProcessing(input)    // 1st: assignment
+    if result == nil {                    // 2nd: use
+        return errors.New("failed")
+    }
+    return saveResult(result)             // 3rd: use (clear reuse)
+}
+```
+
+#### Exception: Line Too Long
+```go
+// ✅ Allowed: Use variable when line is too long
+func processComplexData(data *ComplexStruct) error {
+    processedResult := data.ProcessWithMultipleParameters(param1, param2, param3, param4, param5)
+    return validateAndStoreResult(processedResult, additionalParam1, additionalParam2)
+}
+```
+
+#### Exception: Multiple Return Values
+```go
+// ✅ Allowed: When receiving multiple return values
+func cleanText(text string) string {
+    before, _, _ := strings.Cut(text, "(")
+    return strings.TrimSpace(before)
+}
+```
+
+#### Judgment Criteria
+1. **Count usage**: Total of assignment + references
+2. **2+ times means use variable**: Consider it reuse
+3. **Only 1 time means direct use**: Avoid variables
+4. **Line length**: Exception when exceeding 80-100 characters
+5. **Multiple returns**: Store only needed values in variables
+
+#### Common Mistake Patterns
+```go
+// ❌ This is not reuse (1 assignment + 1 use = 2 times total but essentially 1 operation)
+result := function()
+return result
+
+// ✅ This is reuse (1 assignment + 2 uses = 3 times total)
+result := function()
+if result != nil {
+    return process(result)
+}
+```
+
+This rule ensures only truly reused variables are used, eliminating unnecessary complexity.
 
 ## Code Review Standards
 - Ensure all functions have clear, descriptive names
