@@ -13,6 +13,11 @@
 - プロジェクト全体で一貫したログ形式を使用する
 - 関連する機能を適切に命名された関数にグループ化する
 
+### Goビルド確認ルール
+- **ビルド確認時は必ず`go build -o /dev/null .`を使用する**
+- 実行ファイルを生成せずにコンパイルエラーのみをチェックする
+- 作業ディレクトリを汚さないためのベストプラクティス
+
 ## PHP固有のガイドライン
 - 文字列リテラルにはデフォルトでシングルクォートを使用する
 - ダブルクォート内での変数展開は絶対に使用しない
@@ -87,6 +92,11 @@ func formatOutput() { ... }   // processDataから呼び出される
 - Prefer explicit error handling over silent failures
 - Use consistent logging format across the project
 - Group related functionality into well-named functions
+
+### Go Build Verification Rules
+- **Always use `go build -o /dev/null .` when checking if build passes**
+- Check for compilation errors without generating executable files
+- Best practice to avoid cluttering the working directory
 
 ## PHP-specific Guidelines
 - Use single quotes for string literals by default
