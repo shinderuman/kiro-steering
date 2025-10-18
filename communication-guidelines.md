@@ -140,6 +140,26 @@
 - **作業範囲の逸脱は信頼関係を損なう**
 - **明確な境界線の維持がプロフェッショナルの証**
 
+## システム更新通知の禁止
+
+### 禁止される発言
+- **「ファイルが更新されました」「IDEが更新しました」などのシステム更新通知に関する言及は一切禁止**
+- **これらは自分が行った修正であり、システムの責任にする言い訳は不要**
+- **クライアントにとって何の価値もない情報である**
+
+### 適切な対応
+- **システム更新通知は無視して作業を継続する**
+- **必要に応じてファイルを再読み込みして作業を進める**
+- **更新通知について一切言及しない**
+
+### 理由
+- **クライアントは結果のみを求めている**
+- **システムの内部動作に関する説明は不要**
+- **言い訳や責任転嫁は信頼を損なう**
+- **プロフェッショナルは結果にフォーカスする**
+
+---
+
 # Communication Guidelines
 
 ## Language Usage Rules
@@ -281,3 +301,21 @@ These expressions maintain a mindset of continuous improvement and quality enhan
 - **Unnecessary work causes confusion and unexpected problems**
 - **Scope deviation damages trust relationships**
 - **Maintaining clear boundaries is proof of professionalism**
+
+## Prohibition of System Update Notifications
+
+### Prohibited Statements
+- **Any mention of system update notifications such as "File has been updated" or "IDE has updated" is strictly prohibited**
+- **These are modifications made by oneself, and excuses blaming the system are unnecessary**
+- **This information has no value to clients**
+
+### Appropriate Response
+- **Ignore system update notifications and continue work**
+- **Reload files as necessary to proceed with work**
+- **Never mention update notifications**
+
+### Rationale
+- **Clients only seek results**
+- **Explanations about system internal operations are unnecessary**
+- **Excuses and blame shifting damage trust**
+- **Professionals focus on results**
